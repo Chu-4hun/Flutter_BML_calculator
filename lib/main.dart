@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'icon_content.dart';
+import 'reusable_card.dart';
 
 void main() => runApp(BMICalculator());
 
@@ -46,7 +48,7 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReusableCard(
                     color: Theme.of(context).colorScheme.surface,
-                    cardChild: GenderWidget(
+                    cardChild: IconContent(
                       FontAwesomeIcons.mars,
                       'MALE',
                     ),
@@ -55,9 +57,9 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReusableCard(
                     color: Theme.of(context).colorScheme.surface,
-                    cardChild: GenderWidget(
+                    cardChild: IconContent(
                       FontAwesomeIcons.venus,
-                      'Female',
+                      'FEMALE',
                     ),
                   ),
                 ),
@@ -96,56 +98,6 @@ class _InputPageState extends State<InputPage> {
             height: 80.0,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class GenderWidget extends StatelessWidget {
-  GenderWidget(this.ico, this.label);
-
-  final IconData ico;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Icon(
-          ico,
-          size: 110.0,
-          color: Colors.white,
-        ),
-        SizedBox(
-          height: 15.0,
-        ),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 18.0,
-            color: Color(0xFF8D8E98),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class ReusableCard extends StatelessWidget {
-  ReusableCard({required this.color, this.cardChild});
-
-  final Color color;
-  final Widget? cardChild;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: cardChild,
-      margin: EdgeInsets.all(5.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: color,
       ),
     );
   }
