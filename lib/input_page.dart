@@ -31,42 +31,34 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(
-                        () {
-                          isMale = true;
-                        },
-                      );
+                  child: ReusableCard(
+                    onPress: () {
+                      setState(() {
+                        isMale = true;
+                      });
                     },
-                    child: ReusableCard(
-                      color: isMale
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.surface,
-                      cardChild: IconContent(
-                        FontAwesomeIcons.mars,
-                        'MALE',
-                      ),
+                    color: isMale
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.surface,
+                    cardChild: IconContent(
+                      FontAwesomeIcons.mars,
+                      'MALE',
                     ),
                   ),
                 ),
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(
-                        () {
-                          isMale = false;
-                        },
-                      );
+                  child: ReusableCard(
+                    onPress: () {
+                      setState(() {
+                        isMale = false;
+                      });
                     },
-                    child: ReusableCard(
-                      color: !isMale
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.surface,
-                      cardChild: IconContent(
-                        FontAwesomeIcons.venus,
-                        'FEMALE',
-                      ),
+                    color: !isMale
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.surface,
+                    cardChild: IconContent(
+                      FontAwesomeIcons.venus,
+                      'FEMALE',
                     ),
                   ),
                 ),
