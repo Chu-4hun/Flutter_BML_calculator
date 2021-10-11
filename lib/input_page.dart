@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bml_calc/reusable_card.dart';
+import 'package:flutter_bml_calc/themes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'icon_content.dart';
@@ -26,6 +27,7 @@ class _InputPageState extends State<InputPage> {
         backgroundColor: Theme.of(context).colorScheme.background,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: Row(
@@ -68,6 +70,26 @@ class _InputPageState extends State<InputPage> {
           Expanded(
             child: ReusableCard(
               color: Theme.of(context).colorScheme.surface,
+              cardChild: Column(
+                children: <Widget>[
+                  Text(
+                    'Height',
+                    style: textDefaultStyle,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        '180',
+                        style: textDefaultBoldStyle,
+                      ),
+                      Text(
+                        'cm',
+                        style: textDefaultStyle,
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
           Expanded(

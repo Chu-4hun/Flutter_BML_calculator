@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-
-const labelTextStyle = TextStyle(
-  fontSize: 18.0,
-  color: Color(0xFF8D8E98),
-);
+import 'package:flutter_bml_calc/themes.dart';
 
 class IconContent extends StatelessWidget {
   IconContent(this.ico, this.label);
@@ -19,14 +15,14 @@ class IconContent extends StatelessWidget {
         Icon(
           ico,
           size: 110.0,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.secondaryVariant,
         ),
         SizedBox(
           height: 15.0,
         ),
         Text(
           label,
-          style: labelTextStyle,
+          style: textDefaultStyle,
         ),
       ],
     );
