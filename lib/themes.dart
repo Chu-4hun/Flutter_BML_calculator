@@ -5,7 +5,7 @@ ThemeData defaultTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch().copyWith(
     surface: const Color(0xFF598392),
     secondary: const Color(0xFFEB1555),
-    secondaryVariant: Color(0xFFeff6e0),
+    secondaryVariant: const Color(0xFFeff6e0),
     primary: const Color(0xff124559), //inactive card color
     background: const Color(0xff01161e),
   ),

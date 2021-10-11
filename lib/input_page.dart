@@ -11,10 +11,9 @@ class InputPage extends StatefulWidget {
   _InputPageState createState() => _InputPageState();
 }
 
-enum Gender { male, female }
-
 class _InputPageState extends State<InputPage> {
   bool isMale = true;
+  int height = 180;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -71,15 +70,19 @@ class _InputPageState extends State<InputPage> {
             child: ReusableCard(
               color: Theme.of(context).colorScheme.surface,
               cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     'Height',
                     style: textDefaultStyle,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
                     children: <Widget>[
                       Text(
-                        '180',
+                        height.toString(),
                         style: textDefaultBoldStyle,
                       ),
                       Text(
@@ -87,7 +90,20 @@ class _InputPageState extends State<InputPage> {
                         style: textDefaultStyle,
                       ),
                     ],
-                  )
+                  ),
+                  Slider(
+                      value: height.toDouble(),
+                      min: 110.0,
+                      max: 230.0,
+                      thumbColor: Theme.of(context).colorScheme.secondary,
+                      inactiveColor: Theme.of(context).colorScheme.primary,
+                      activeColor:
+                          Theme.of(context).colorScheme.secondaryVariant,
+                      onChanged: (double newValue) {
+                        setState(() {
+                          height = newValue.round();
+                        });
+                      })
                 ],
               ),
             ),
