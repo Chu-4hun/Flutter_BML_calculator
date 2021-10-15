@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bml_calc/reusable_card.dart';
@@ -14,6 +16,7 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   bool isMale = true;
   int height = 180;
+  int weight = 80;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -74,7 +77,8 @@ class _InputPageState extends State<InputPage> {
                 children: <Widget>[
                   Text(
                     'Height',
-                    style: textDefaultStyle,
+                    style: defaultTextStyle.copyWith(
+                        color: Theme.of(context).colorScheme.secondaryVariant),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -83,15 +87,21 @@ class _InputPageState extends State<InputPage> {
                     children: <Widget>[
                       Text(
                         height.toString(),
-                        style: textDefaultBoldStyle,
+                        style: defaultTextBoldStyle.copyWith(
+                            color:
+                                Theme.of(context).colorScheme.secondaryVariant),
                       ),
                       Text(
                         'cm',
-                        style: textDefaultStyle,
+                        style: defaultTextStyle.copyWith(
+                            color:
+                                Theme.of(context).colorScheme.secondaryVariant),
                       ),
                     ],
                   ),
-                  Slider(
+                  SliderTheme(
+                    data: defaultSliderTheme,
+                    child: Slider(
                       value: height.toDouble(),
                       min: 110.0,
                       max: 230.0,
@@ -100,10 +110,14 @@ class _InputPageState extends State<InputPage> {
                       activeColor:
                           Theme.of(context).colorScheme.secondaryVariant,
                       onChanged: (double newValue) {
-                        setState(() {
-                          height = newValue.round();
-                        });
-                      })
+                        setState(
+                          () {
+                            height = newValue.round();
+                          },
+                        );
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
@@ -114,6 +128,44 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReusableCard(
                     color: Theme.of(context).colorScheme.surface,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Weight',
+                          style: defaultTextStyle.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondaryVariant),
+                        ),
+                        Text(
+                          weight.toString(),
+                          style: defaultTextBoldStyle.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondaryVariant),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: (RoundIconButton(
+                                size: 56.0,
+                                icon: FontAwesomeIcons.minus,
+                              )),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: (RoundIconButton(
+                                size: 56.0,
+                                icon: FontAwesomeIcons.plus,
+                              )),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
@@ -136,6 +188,39 @@ class _InputPageState extends State<InputPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class RoundIconButton extends StatelessWidget {
+  RoundIconButton({
+    this.onPress,
+    required this.size,
+    this.icon,
+  });
+
+  final Function? onPress;
+  final IconData? icon;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(
+        icon,
+        color: Theme.of(context).colorScheme.secondaryVariant,
+      ),
+      onPressed: () {
+        onPress;
+      },
+      elevation: 6.0,
+      constraints: BoxConstraints.tightFor(
+        width: size,
+        height: size,
+      ),
+      shape: const CircleBorder(),
+      fillColor: Theme.of(context).colorScheme.secondary,
+      // elevation: ,
     );
   }
 }

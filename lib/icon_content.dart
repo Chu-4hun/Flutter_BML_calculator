@@ -22,7 +22,8 @@ class IconContent extends StatelessWidget {
         ),
         Text(
           label,
-          style: textDefaultStyle,
+          style: defaultTextStyle.copyWith(
+              color: Theme.of(context).colorScheme.secondaryVariant),
         ),
       ],
     );
