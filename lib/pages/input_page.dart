@@ -1,12 +1,14 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bml_calc/Round_Button_w_Icon.dart';
+import 'package:flutter_bml_calc/bmi_logic.dart';
+import 'package:flutter_bml_calc/pages/results_page.dart';
 import 'package:flutter_bml_calc/reusable_card.dart';
 import 'package:flutter_bml_calc/themes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'icon_content.dart';
+import '../bottom_button.dart';
+import '../icon_content.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -17,6 +19,7 @@ class _InputPageState extends State<InputPage> {
   bool isMale = true;
   int height = 180;
   int weight = 80;
+  int age = 18;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -117,7 +120,7 @@ class _InputPageState extends State<InputPage> {
                         );
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -151,6 +154,15 @@ class _InputPageState extends State<InputPage> {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               child: (RoundIconButton(
+                                onPress: () {
+                                  setState(
+                                    () {
+                                      if (weight > 0) {
+                                        weight--;
+                                      }
+                                    },
+                                  );
+                                },
                                 size: 56.0,
                                 icon: FontAwesomeIcons.minus,
                               )),
@@ -160,10 +172,17 @@ class _InputPageState extends State<InputPage> {
                               child: (RoundIconButton(
                                 size: 56.0,
                                 icon: FontAwesomeIcons.plus,
+                                onPress: () {
+                                  setState(
+                                    () {
+                                      weight++;
+                                    },
+                                  );
+                                },
                               )),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -171,56 +190,83 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReusableCard(
                     color: Theme.of(context).colorScheme.surface,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Age',
+                          style: defaultTextStyle.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondaryVariant),
+                        ),
+                        Text(
+                          age.toString(),
+                          style: defaultTextBoldStyle.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondaryVariant),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: (RoundIconButton(
+                                onPress: () {
+                                  setState(
+                                    () {
+                                      if (age > 0) {
+                                        age--;
+                                      }
+                                    },
+                                  );
+                                },
+                                size: 56.0,
+                                icon: FontAwesomeIcons.minus,
+                              )),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: (RoundIconButton(
+                                size: 56.0,
+                                icon: FontAwesomeIcons.plus,
+                                onPress: () {
+                                  setState(
+                                    () {
+                                      age++;
+                                    },
+                                  );
+                                },
+                              )),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(10), bottom: Radius.zero),
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-            margin: EdgeInsets.only(top: 10),
-            width: double.infinity,
-            height: 80.0,
+          BottomButton(
+            titleText: 'Calculate',
+            onTap: () {
+              CalculatorBrian calc =
+                  CalculatorBrian(height: height, weight: weight);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultsPage(
+                      bmiResult: calc.calculateBMI(),
+                      textResult: calc.getResult(),
+                      coment: calc.getComment()),
+                ),
+              );
+            },
           ),
         ],
       ),
-    );
-  }
-}
-
-class RoundIconButton extends StatelessWidget {
-  RoundIconButton({
-    this.onPress,
-    required this.size,
-    this.icon,
-  });
-
-  final Function? onPress;
-  final IconData? icon;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(
-        icon,
-        color: Theme.of(context).colorScheme.secondaryVariant,
-      ),
-      onPressed: () {
-        onPress;
-      },
-      elevation: 6.0,
-      constraints: BoxConstraints.tightFor(
-        width: size,
-        height: size,
-      ),
-      shape: const CircleBorder(),
-      fillColor: Theme.of(context).colorScheme.secondary,
-      // elevation: ,
     );
   }
 }
